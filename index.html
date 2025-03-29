@@ -17,7 +17,14 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const ctx = document.getElementById('myChart').getContext('2d');
+        const const candlestickData = [
+    { t: '2025-03-24', o: 15000, h: 15200, l: 14950, c: 15100 },
+    { t: '2025-03-25', o: 15100, h: 15300, l: 15050, c: 15250 },
+    { t: '2025-03-26', o: 15250, h: 15400, l: 15150, c: 15300 },
+    { t: '2025-03-27', o: 15300, h: 15500, l: 15200, c: 15450 },
+    { t: '2025-03-28', o: 15450, h: 15600, l: 15350, c: 15500 }
+];
+ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
