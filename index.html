@@ -1,23 +1,78 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>निफ्टी डेटा कैंडलस्टिक चार्ट</title>
+    <title>Live Candlestick Chart</title>
+    <!-- Include Luxon for date handling -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.26.0"></script>
+    <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js"></script>
+    <!-- Include Chart.js adapter for Luxon -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <!-- Include Chart.js Financial Chart plugin -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.1.0"></script>
 </head>
 <body>
-    <h1>निफ्टी डेटा कैंडलस्टिक चार्ट</h1>
+    <h1>Live Candlestick Chart</h1>
     <canvas id="candlestickChart"></canvas>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('candlestickChart').getContext('2d');
 
-            const candlestickData = [
-                { t: '2025-03-24', o: 15000, h: 15200,
-::contentReference[oaicite:35]{index=35}
- 
+            // Initialize the chart
+            const candlestickChart = new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: 'Live Data',
+                        data: [],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'minute'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Function to fetch live data and update the chart
+            async function updateChart() {
+                try {
+                    // Fetch data from your API
+                    const response = await fetch('YOUR_API_ENDPOINT');
+                    const jsonData = await response.json();
+
+                    // Transform the data into the required format
+                    const candlestickData = jsonData.map(dataPoint => ({
+                        t: new Date(dataPoint.timestamp),
+                        o: dataPoint.open,
+                        h: dataPoint.high,
+                        l: dataPoint.low,
+                        c: dataPoint.close
+                    }));
+
+                    // Update the chart's data
+                    candlestickChart.data.datasets[0].data = candlestickData;
+                    candlestickChart.update();
+                } catch (error) {
+                    console.error('Error fetching or updating data:', error);
+                }
+            }
+
+            // Initial chart update
+            updateChart();
+
+            // Set interval to update the chart every minute (60000 ms)
+            setInterval(updateChart, 60000);
+        });
+    </script>
+</body>
+</html>
