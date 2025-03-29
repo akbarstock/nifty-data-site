@@ -5,24 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nifty Data Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+</head> <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
     <h1>Nifty Data Chart</h1>
     <canvas id="myChart"></canvas>
 
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Strike 1', 'Strike 2', 'Strike 3'],
-                datasets: [{
-                    label: 'Premium Price',
-                    data: [10, 20, 30],
-                    backgroundColor: 'blue'
-                }]
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Strike 1', 'Strike 2', 'Strike 3'],
+            datasets: [{
+                label: 'Premium Price',
+                data: [10, 20, 30],
+                backgroundColor: 'blue'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 </body>
 </html>
